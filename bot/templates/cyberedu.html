@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CyberEdu</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://images.pexels.com/photos/6077123/pexels-photo-6077123.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .glass {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        ::placeholder {
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body class="text-white h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-2xl glass p-6 rounded-xl shadow-lg">
+        <h1 class="text-4xl font-bold text-center mb-6 text-red-400">💡 CyberEdu - Cyber Awareness</h1>
+        <p class="text-lg mb-8 text-center text-gray-300">Ask me anything about cybersecurity and I'll guide you through it!</p>
+
+        <!-- Chatbox -->
+        <div id="chat-box" class="bg-gray-800 bg-opacity-50 w-full h-96 overflow-y-auto p-4 rounded-lg mb-4 shadow-inner space-y-2 text-sm">
+            <!-- Chat history will appear here -->
+        </div>
+
+        <!-- User Input Form -->
+        <form id="chat-form" class="flex">
+            <input id="user-input" type="text" placeholder="Ask a cybersecurity question..." class="flex-1 p-3 rounded-l-lg text-black focus:outline-none" required>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg font-semibold">Ask</button>
+        </form>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const form = document.getElementById('chat-form');
+        const input = document.getElementById('user-input');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const question = input.value.trim();
+            if (!question) return;
+
+            // Display user question in chatbox
+            chatBox.innerHTML += `<div><strong class="text-blue-300">You:</strong> ${question}</div>`;
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                // Send the question to the backend for a response
+                const res = await fetch('/edu-bot', {  // Updated URL to /edu-bot
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: question })  // Correct JSON key
+                });
+
+                const data = await res.json();
+                // Display bot response
+                chatBox.innerHTML += `<div><strong class="text-green-400">Bot:</strong> ${data.reply}</div>`;
+            } catch (err) {
+                // Error handling
+                chatBox.innerHTML += `<div class="text-red-400">Bot: Sorry, something went wrong.</div>`;
+            }
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://images.pexels.com/photos/6077123/pexels-photo-6077123.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .form-container {
+      background-color: rgba(31, 41, 55, 0.85); /* bg-gray-800 with opacity */
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="text-white flex items-center justify-center h-screen">
+  <form action="/login" method="POST" class="form-container p-6 rounded-lg shadow-lg w-80">
+    <h2 class="text-2xl mb-4 text-center font-semibold">Legal Bridge⚖️</h2>
+    
+    <!-- Username input -->
+    <input type="text" name="username" placeholder="Username" class="w-full p-2 mb-4 rounded text-black" required>
+    
+    <!-- Password input -->
+    <input type="password" name="password" placeholder="Password" class="w-full p-2 mb-4 rounded text-black" required>
+    
+    <!-- Login Button -->
+    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 p-2 rounded">Login</button>
+    
+    <!-- Error message (if any) -->
+    {% if error %}
+      <p class="text-red-500 text-center mt-4">{{ error }}</p>
+    {% endif %}
+    
+    <!-- Register Link -->
+    <p class="text-center mt-4 text-gray-300">Don't have an account? <a href="{{ url_for('register') }}" class="text-blue-400 hover:text-blue-500">Register here</a></p>
+  </form>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Link Checker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background-image: url('https://media.istockphoto.com/id/1345812496/photo/abstract-warning-of-a-detected-malware-program.jpg?s=612x612&w=0&k=20&c=DVFjkKG1zYtEqQBqcYKe-2f0DTrICznwYs9aYqLQJfI=');
+            background-color: #f4f6f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background:white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 400px;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 12px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 30px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .loading {
+            margin-top: 20px;
+            color: #007BFF;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fa-solid fa-shield-halved"></i> Link Safety Checker</h1>
+
+        <input type="text" id="urlInput" placeholder="Enter the URL here">
+        <br>
+        <button onclick="checkLink()">Check</button>
+
+        <div id="loading" class="loading" style="display:none;">
+            <i class="fa-solid fa-spinner fa-spin"></i> Checking...
+        </div>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function checkLink() {
+            var url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                alert("Please enter a URL to check.");
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').innerHTML = '';
+
+            fetch('/check_link', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: url })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+
+                if (data.result) {
+                    document.getElementById('result').innerHTML = data.result;
+                } else if (data.error) {
+                    document.getElementById('result').innerHTML = "❌ " + data.error;
+                } else {
+                    document.getElementById('result').innerHTML = "❓ Unexpected error occurred.";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('result').innerHTML = "❌ Failed to check the link.";
+            });
+        }
+    </script>
+</body>
+</html>

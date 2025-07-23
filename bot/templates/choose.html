@@ -1,0 +1,114 @@
+\<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Choose Your Path</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://e0.pxfuel.com/wallpapers/52/913/desktop-wallpaper-the-firm-stand-firm-law-firm.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .glass {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+
+    .option-card {
+      background-color: rgba(31, 41, 55, 0.85);
+      backdrop-filter: blur(4px);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 220px; /* Reduced height */
+    }
+
+    .option-card:hover {
+      transform: scale(1.05);
+    }
+
+    .option-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .option-card p {
+      color: #d1d5db;
+      font-size: 0.9rem;
+      flex-grow: 1;
+    }
+
+    .option-card a {
+      display: inline-block;
+      background-color: #3b82f6;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.4rem;
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+      transition: background-color 0.3s;
+    }
+
+    .option-card a:hover {
+      background-color: #2563eb;
+    }
+
+    .options-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body class="h-screen flex items-center justify-center text-white">
+  <div class="glass w-full max-w-4xl text-center">
+    <h1 class="text-3xl font-bold mb-4 text-blue-400">🧠 Welcome to Legal Bridge⚖️</h1>
+    <p class="text-base mb-6">Choose what you'd like help with today:</p>
+
+    <div class="options-container">
+        <!-- Law Section Info Bot -->
+        <div class="option-card">
+            <h3>Law Section Info⚖️</h3>
+            <p>Get simple explanations of cyber law sections based on your case.</p>
+            <a href="{{ url_for('chatbot') }}">Go to LawBot</a>
+        </div>
+
+        <!-- Immediate Action & Prevention Bot -->
+        <div class="option-card">
+            <h3>Immediate Action & Prevention🛡️</h3>
+            <p>Get step-by-step urgent actions and future prevention tips.</p>
+            <a href="{{ url_for('shield') }}">Go to ShieldBot</a>
+        </div>
+
+        <!-- Malicious Link Checker -->
+        <div class="option-card">
+            <h3>Malicious Link Checker🔗</h3>
+            <p>Check if a URL is safe or malicious before visiting!</p>
+            <a href="{{ url_for('linkchecker') }}">Check a Link</a>
+        </div>
+
+        <!-- CyberEdu Bot -->
+        <div class="option-card">
+            <h3>CyberEdu Bot💡</h3>
+            <p>Ask cybersecurity-related questions and learn easily.</p>
+            <a href="{{ url_for('cyberedu') }}">Ask CyberEdu</a>
+        </div>
+    </div>
+
+    <div class="mt-6">
+      <a href="/logout" class="text-sm text-red-400 hover:underline">Logout</a>
+    </div>
+  </div>
+</body>
+</html>

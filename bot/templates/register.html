@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://images.pexels.com/photos/6077123/pexels-photo-6077123.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .form-container {
+      background-color: rgba(31, 41, 55, 0.85);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="text-white flex items-center justify-center h-screen">
+  <form action="/register" method="POST" class="form-container p-6 rounded-lg shadow-lg w-80">
+    <h2 class="text-2xl mb-4 text-center font-semibold">Register</h2>
+
+    <input type="text" name="username" placeholder="Username" class="w-full p-2 mb-4 rounded text-black" required>
+
+    <input type="password" name="password" placeholder="Password" class="w-full p-2 mb-4 rounded text-black" required>
+
+    <input type="password" name="confirm_password" placeholder="Confirm Password" class="w-full p-2 mb-4 rounded text-black" required>
+
+    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 p-2 rounded">Register</button>
+
+    <p class="mt-4 text-center text-sm">Already have an account? <a href="/login" class="text-blue-400 hover:underline">Login</a></p>
+  </form>
+</body>
+</html>

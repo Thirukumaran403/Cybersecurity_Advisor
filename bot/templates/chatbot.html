@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Law Chatbot</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://i.pinimg.com/736x/2f/b5/44/2fb54499563c33ab21fd3bc7a44bb165.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #111827; /* fallback */
+    }
+
+    .glass {
+      background: rgba(233, 234, 237, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px); /* for Safari */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    ::placeholder {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body class="text-white h-screen flex flex-col items-center justify-center p-4">
+  <div class="w-full max-w-2xl glass p-6 rounded-xl shadow-lg">
+    <h1 class="text-4xl font-bold text-center mb-6 text-red-400">⚖️ LegalBridge</h1>
+    <div id="chat-box" class="bg-gray-800 bg-opacity-50 w-full h-96 overflow-y-auto p-4 rounded-lg mb-4 shadow-inner space-y-2 text-sm">
+      
+    </div>
+    <form id="chat-form" class="flex">
+      <input id="user-input" type="text" placeholder="Describe your scenario..." class="flex-1 p-3 rounded-l-lg text-black focus:outline-none" required>
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg font-semibold">Send</button>
+    </form>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById('chat-box');
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('user-input');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (!message) return;
+
+      chatBox.innerHTML += `<div><strong class="text-blue-300">You:</strong> ${message}</div>`;
+      input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      try {
+        const res = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+        chatBox.innerHTML += `<div><strong class="text-green-400">Bot:</strong> ${data.reply}</div>`;
+      } catch (err) {
+        chatBox.innerHTML += `<div class="text-red-400">Bot: Sorry, something went wrong.</div>`;
+      }
+
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+  </script>
+</body>
+</html>
