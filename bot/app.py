@@ -8,8 +8,8 @@ import re
 app = Flask(__name__)
 app.secret_key = 'your-very-secret-key-12345'
 # API KEYS
-OPENROUTER_API_KEY = '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'
-VIRUSTOTAL_API_KEY = '377cd1b604bb73b3875f0fe14abc4500f8e45dd45722ee7836a9e91fc3f31d99'
+OPENROUTER_API_KEY = 'your-api-key'
+VIRUSTOTAL_API_KEY = 'your-api-key'
 
 # File to store user data
 USERS_FILE = 'users.json'
